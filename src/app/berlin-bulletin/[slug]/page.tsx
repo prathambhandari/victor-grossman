@@ -39,12 +39,10 @@ export async function generateMetadata({
     description,
     path: bulletinPath(bulletin),
     publishedTime: bulletin.published_date ?? bulletin.created_at,
-    keywords: [
-      "Victor Grossman",
-      "Berlin Bulletin",
-      bulletin.title,
-      bulletin.bulletin_number ?? "",
-    ].filter(Boolean),
+    section: "Berlin Bulletin",
+    keywords: ["Berlin Bulletin", bulletin.title, bulletin.bulletin_number ?? ""].filter(
+      Boolean,
+    ),
   });
 }
 

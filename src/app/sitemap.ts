@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}${SEO_SECTION_PATHS.biography}`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.95,
+      priority: 0.98,
     },
     {
       url: `${SITE_URL}${SEO_SECTION_PATHS.berlinBulletin}`,

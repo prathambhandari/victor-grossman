@@ -36,7 +36,8 @@ export async function generateMetadata({
     description,
     path: bookPath(book),
     image: book.image_url,
-    keywords: ["Victor Grossman", book.title, "Victor Grossman book"],
+    section: "Books",
+    keywords: [book.title, "Victor Grossman book", book.author],
   });
 }
 

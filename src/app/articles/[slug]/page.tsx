@@ -38,11 +38,8 @@ export async function generateMetadata({
     path: articlePath(article),
     image: article.image_url,
     publishedTime: article.created_at,
-    keywords: [
-      "Victor Grossman",
-      article.title,
-      article.category ?? "article",
-    ],
+    section: article.category ?? "Articles",
+    keywords: [article.title, article.category ?? "article"],
   });
 }
 

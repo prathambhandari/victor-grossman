@@ -36,7 +36,8 @@ export async function generateMetadata({
     description,
     path: interviewPath(interview),
     image: interview.image_url,
-    keywords: ["Victor Grossman", "Victor Grossman interview", interview.title],
+    section: "Interviews",
+    keywords: ["Victor Grossman interview", interview.title, interview.person],
   });
 }
 
