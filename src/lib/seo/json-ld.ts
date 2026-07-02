@@ -1,4 +1,7 @@
 import { PERSON, SITE_NAME, SITE_URL } from "./site";
+import type { PublicArchiveData } from "./public-data";
+import { archiveLinkItems } from "./dynamic";
+import { SEO_SECTION_PATHS } from "./paths";
 
 export function buildPersonJsonLd() {
   return {
@@ -6,7 +9,8 @@ export function buildPersonJsonLd() {
     "@type": "Person",
     "@id": `${SITE_URL}/#victor-grossman`,
     name: PERSON.name,
-    alternateName: PERSON.alternateName,
+    alternateName: [PERSON.alternateName, "Victor Grossman Berlin"],
+    additionalName: PERSON.alternateName,
     description: PERSON.description,
     birthDate: PERSON.birthDate,
     deathDate: PERSON.deathDate,
@@ -23,6 +27,7 @@ export function buildPersonJsonLd() {
     sameAs: PERSON.sameAs,
     image: PERSON.heroImage,
     url: SITE_URL,
+    mainEntityOfPage: { "@id": `${SITE_URL}/#webpage` },
   };
 }
 
@@ -32,7 +37,11 @@ export function buildWebSiteJsonLd() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     name: SITE_NAME,
-    alternateName: "Victor Grossman Memorial Website",
+    alternateName: [
+      "Victor Grossman Memorial Website",
+      "Victor Grossman Official Site",
+      "victorgrossman.com",
+    ],
     url: SITE_URL,
     description: PERSON.description,
     inLanguage: ["en", "de"],
@@ -41,6 +50,14 @@ export function buildWebSiteJsonLd() {
       "@type": "Organization",
       name: SITE_NAME,
       url: SITE_URL,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}${SEO_SECTION_PATHS.berlinBulletin}?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
     },
   };
 }
@@ -75,15 +92,76 @@ export function buildProfilePageJsonLd() {
   };
 }
 
-export function buildHomeJsonLdGraph() {
+export function buildHomeJsonLdGraph(archive?: PublicArchiveData) {
+  const graph: Record<string, unknown>[] = [
+    buildPersonJsonLd(),
+    buildWebSiteJsonLd(),
+    buildWebPageJsonLd(),
+    buildProfilePageJsonLd(),
+    buildOrganizationJsonLd(),
+    buildFaqJsonLd(),
+  ];
+
+  if (archive) {
+    const links = archiveLinkItems(archive);
+    graph.push(
+      buildItemListJsonLd(
+        "Victor Grossman Berlin Bulletin Archive",
+        SEO_SECTION_PATHS.berlinBulletin,
+        links.bulletins,
+      ),
+      buildItemListJsonLd(
+        "Books by Victor Grossman",
+        SEO_SECTION_PATHS.books,
+        links.books,
+      ),
+    );
+  }
+
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      buildPersonJsonLd(),
-      buildWebSiteJsonLd(),
-      buildWebPageJsonLd(),
-      buildProfilePageJsonLd(),
-      buildOrganizationJsonLd(),
+    "@graph": graph,
+  };
+}
+
+export function buildFaqJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SITE_URL}/#faq`,
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Who was Victor Grossman?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: PERSON.description,
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What was Victor Grossman's birth name?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Victor Grossman was born Stephen Wechsler on March 11, 1928 in New York City. He adopted the name Victor Grossman after defecting to East Germany in 1952.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What is the Berlin Bulletin by Victor Grossman?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `The Berlin Bulletin was Victor Grossman's newsletter on politics, history, and life in Berlin and Germany. The official archive at ${SITE_URL} covers issues from 2017 through 2025.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where is the official Victor Grossman memorial website?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `The official memorial website for Victor Grossman is ${SITE_URL}, featuring biography, Berlin Bulletins, books, articles, interviews, photos, and tributes.`,
+        },
+      },
     ],
   };
 }

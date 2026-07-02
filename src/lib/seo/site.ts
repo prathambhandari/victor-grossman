@@ -33,16 +33,19 @@ export const PERSON = {
 } as const;
 
 export const DEFAULT_TITLE =
-  "Victor Grossman (1928–2025) | Official Memorial & Berlin Bulletin Archive";
+  "Victor Grossman | Official Memorial Site (1928–2025)";
 
 export const DEFAULT_DESCRIPTION =
-  "Official memorial website at victorgrossman.com for Victor Grossman (Stephen Wechsler, 1928–2025): biography, funeral eulogies, Berlin Bulletin archive (2017–2025), books, articles, interviews, photo archive, and wall of memories. American journalist and author in East Germany and Berlin.";
+  "Victor Grossman — official memorial at www.victorgrossman.com. Biography of Stephen Wechsler (1928–2025), Berlin Bulletin archive, books, articles, interviews, photos, and tributes. American journalist in East Germany and Berlin.";
 
 export const KEYWORDS = [
   "Victor Grossman",
-  "Stephen Wechsler",
-  "victorgrossman.com",
+  "Victor Grossman official website",
   "Victor Grossman memorial",
+  "Victor Grossman site",
+  "Stephen Wechsler",
+  "www.victorgrossman.com",
+  "victorgrossman.com",
   "Victor Grossman biography",
   "Victor Grossman Berlin",
   "Berlin Bulletin Victor Grossman",
@@ -55,4 +58,5 @@ export const KEYWORDS = [
   "Crossing the River Victor Grossman",
   "Victor Grossman archive",
   "Victor Grossman interviews",
+  "Victor Grossman 1928 2025",
 ] as const;

@@ -12,11 +12,14 @@ import { stripHtml } from "@/lib/html";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = buildSectionMetadata(
-  "Victor Grossman Books & Publications",
-  "Books and publications by Victor Grossman (Stephen Wechsler), including Crossing the River and works on East Germany, Berlin, and the Cold War.",
-  SEO_SECTION_PATHS.books,
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { books } = await loadPublicArchive();
+  return buildSectionMetadata(
+    `Victor Grossman Books (${books.length} titles)`,
+    `Victor Grossman — ${books.length} books and publications including Crossing the River. Stephen Wechsler, GDR journalist and author. Official memorial at www.victorgrossman.com.`,
+    SEO_SECTION_PATHS.books,
+  );
+}
 
 export default async function BooksIndexPage() {
   const { books } = await loadPublicArchive();

@@ -18,7 +18,7 @@ describe("SEO site config", () => {
 });
 
 describe("JSON-LD graph", () => {
-  it("includes Organization in home graph", () => {
+  it("includes Organization and FAQ in home graph", () => {
     const graph = buildHomeJsonLdGraph();
     const types = (graph["@graph"] as { "@type": string }[]).map(
       (node) => node["@type"],
@@ -27,5 +27,6 @@ describe("JSON-LD graph", () => {
     expect(types).toContain("WebSite");
     expect(types).toContain("ProfilePage");
     expect(types).toContain("Organization");
+    expect(types).toContain("FAQPage");
   });
 });

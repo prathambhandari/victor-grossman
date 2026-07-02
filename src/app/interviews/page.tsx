@@ -10,11 +10,14 @@ import { loadPublicArchive } from "@/lib/seo/public-data";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = buildSectionMetadata(
-  "Victor Grossman Interviews — Audio & Video",
-  "Audio and video interviews with Victor Grossman (Stephen Wechsler) on Berlin, East Germany, the Cold War, and a life between Harvard and the GDR.",
-  SEO_SECTION_PATHS.interviews,
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { interviews } = await loadPublicArchive();
+  return buildSectionMetadata(
+    `Victor Grossman Interviews (${interviews.length})`,
+    `Victor Grossman — ${interviews.length} audio and video interviews on Berlin, East Germany, and the Cold War. Official memorial archive at www.victorgrossman.com.`,
+    SEO_SECTION_PATHS.interviews,
+  );
+}
 
 export default async function InterviewsIndexPage() {
   const { interviews } = await loadPublicArchive();

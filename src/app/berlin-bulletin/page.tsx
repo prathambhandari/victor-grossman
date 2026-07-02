@@ -10,11 +10,14 @@ import { loadPublicArchive } from "@/lib/seo/public-data";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = buildSectionMetadata(
-  "Berlin Bulletin Archive — Victor Grossman",
-  "Complete Berlin Bulletin archive by Victor Grossman (2017–2025): newsletters on Berlin, Germany, and world events from an American journalist in East Germany.",
-  SEO_SECTION_PATHS.berlinBulletin,
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { bulletins } = await loadPublicArchive();
+  return buildSectionMetadata(
+    `Victor Grossman Berlin Bulletin Archive (${bulletins.length} issues)`,
+    `Victor Grossman — complete Berlin Bulletin archive with ${bulletins.length} newsletters on Berlin, Germany, and world events (2017–2025). Official memorial at www.victorgrossman.com.`,
+    SEO_SECTION_PATHS.berlinBulletin,
+  );
+}
 
 export default async function BerlinBulletinIndexPage() {
   const { bulletins } = await loadPublicArchive();

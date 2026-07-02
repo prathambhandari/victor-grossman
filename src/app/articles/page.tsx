@@ -11,11 +11,14 @@ import { stripHtml } from "@/lib/html";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = buildSectionMetadata(
-  "Victor Grossman Articles & Films",
-  "Articles, essays, and documentary films about and by Victor Grossman (Stephen Wechsler), American journalist in East Germany and Berlin.",
-  SEO_SECTION_PATHS.articles,
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { articles } = await loadPublicArchive();
+  return buildSectionMetadata(
+    `Victor Grossman Articles & Films (${articles.length})`,
+    `Victor Grossman — ${articles.length} articles, essays, and films. Stephen Wechsler (1928–2025), American journalist in East Germany and Berlin. Official archive at www.victorgrossman.com.`,
+    SEO_SECTION_PATHS.articles,
+  );
+}
 
 export default async function ArticlesIndexPage() {
   const { articles } = await loadPublicArchive();
