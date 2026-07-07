@@ -13,8 +13,8 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const { bulletins } = await loadPublicArchive();
   return buildSectionMetadata(
-    `Victor Grossman Berlin Bulletin Archive (${bulletins.length} issues)`,
-    `Victor Grossman — complete Berlin Bulletin archive with ${bulletins.length} newsletters on Berlin, Germany, and world events (2017–2025). Official memorial at www.victorgrossman.com.`,
+    `Victor Grossman Berlin Bulletin (${bulletins.length})`,
+    `Victor Grossman — ${bulletins.length} Berlin Bulletins (2017–2025). Newsletters on Berlin, Germany & world affairs. Official memorial archive.`,
     SEO_SECTION_PATHS.berlinBulletin,
   );
 }

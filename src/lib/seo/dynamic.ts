@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { stripHtml } from "@/lib/html";
 
+import { truncateMetaDescription } from "./truncate";
+
 import {
   articlePath,
   bookPath,
@@ -21,7 +23,8 @@ import {
 /** Primary brand keyword — used in titles and descriptions. */
 export const BRAND_QUERY = "Victor Grossman";
 
-export function buildDynamicHomeDescription(archive: PublicArchiveData): string {
+/** Long summary for JSON-LD / crawlable HTML (not the meta description tag). */
+export function buildDynamicHomeSummary(archive: PublicArchiveData): string {
   const { bulletins, articles, books, interviews } = archive;
   return (
     `Official ${BRAND_QUERY} memorial at www.victorgrossman.com — biography of Stephen Wechsler (1928–2025), ` +
@@ -31,8 +34,21 @@ export function buildDynamicHomeDescription(archive: PublicArchiveData): string 
   );
 }
 
+/** Short meta description for homepage (<155 chars, Seobility-safe). */
+export function buildHomeMetaDescription(archive: PublicArchiveData): string {
+  const { bulletins, books } = archive;
+  return truncateMetaDescription(
+    `${BRAND_QUERY} (1928–2025) — official memorial. ${bulletins.length} Berlin Bulletins, ${books.length} books, biography, interviews & photos. Stephen Wechsler, GDR journalist.`,
+  );
+}
+
+/** @deprecated Use buildHomeMetaDescription for meta tags. */
+export function buildDynamicHomeDescription(archive: PublicArchiveData): string {
+  return buildHomeMetaDescription(archive);
+}
+
 export function buildHomeMetadata(archive: PublicArchiveData): Metadata {
-  const description = buildDynamicHomeDescription(archive);
+  const description = buildHomeMetaDescription(archive);
   const ogImage = PERSON.heroImage;
 
   return {
@@ -90,9 +106,11 @@ export function victorGrossmanDescription(
   text: string,
   fallback: string,
 ): string {
-  const body = (text && stripHtml(text).slice(0, 155)) || fallback;
+  const body = truncateMetaDescription(
+    (text && stripHtml(text)) || fallback,
+  );
   if (body.toLowerCase().includes("victor grossman")) return body;
-  return `${BRAND_QUERY}: ${body}`;
+  return truncateMetaDescription(`${BRAND_QUERY}: ${body}`);
 }
 
 export function victorGrossmanKeywords(
