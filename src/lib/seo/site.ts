@@ -36,7 +36,7 @@ export const DEFAULT_TITLE =
   "Victor Grossman | Official Memorial Site (1928–2025)";
 
 export const DEFAULT_DESCRIPTION =
-  "Victor Grossman — official memorial at www.victorgrossman.com. Biography of Stephen Wechsler (1928–2025), Berlin Bulletin archive, books, articles, interviews, photos, and tributes. American journalist in East Germany and Berlin.";
+  "Victor Grossman (1928–2025) — official memorial. Biography, Berlin Bulletins, books, interviews & photos. Stephen Wechsler, journalist in Berlin.";
 
 export const KEYWORDS = [
   "Victor Grossman",

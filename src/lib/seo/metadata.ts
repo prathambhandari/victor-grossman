@@ -13,6 +13,7 @@ import {
   victorGrossmanKeywords,
   victorGrossmanPageTitle,
 } from "./dynamic";
+import { truncateMetaDescription } from "./truncate";
 
 type ContentMetadataInput = {
   title: string;
